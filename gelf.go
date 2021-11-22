@@ -103,10 +103,10 @@ func (a *GelfAdapter) Stream(logstream chan *router.Message) {
 		}
 
 		shortMessage := m.Data
-		if shortMessage == "" {
+		if strings.TrimSpace(shortMessage) == "" {
 			continue
 		}
-		
+
 		fullMessage := ""
 		shortMessageNewLine := strings.Index(shortMessage, "\n")
 		if shortMessageNewLine != -1 {
@@ -138,7 +138,7 @@ func (a *GelfAdapter) Stream(logstream chan *router.Message) {
 			log.Println("Graylog:", err)
 			continue
 		}
-		
+
 		if len(extra) > 2 {
 			js = append(js[:len(js)-1], ',')
 			js = append(js, extra[1:]...)
